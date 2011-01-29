@@ -1,0 +1,6 @@
+*.o
+oggted
+cscope.out
+tags
+release
+test
