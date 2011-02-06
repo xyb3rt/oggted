@@ -79,7 +79,7 @@ bool Options::parseCommandLine(int argc, char **argv) {
 				showInfo = true;
 				break;
 			case 'l':
-				listComment = true;
+				listTag = true;
 				break;
 			/* tag removal & version to write */
 			case 'r':
@@ -150,9 +150,9 @@ void Options::printUsage() {
 	cout << "Get information from the files:\n"
 	     << "  -i, --info             display general information for the files\n"
 	     << "  -l, --list             list the tag contents of the files\n\n"
-	     << "To remove fields and whole comments\n"
-	     << "  -r, --remove NAME      remove all comment fields with the given name\n"
-	     << "  -D, --delete-all       delete the whole comments of the files\n\n";
+	     << "To remove fields and whole tags\n"
+	     << "  -r, --remove NAME      remove all fields with the given name from the tags\n"
+	     << "  -D, --delete-all       delete the whole tags of the files\n\n";
 	cout << "Filename <-> tag information:\n"
 	     << "  -n, --file-pattern PATTERN\n"
 	     << "                         extract tag information from the given filenames,\n"
@@ -170,7 +170,7 @@ void Options::printUsage() {
 
 bool Options::writeFile = false;
 bool Options::showInfo = false;
-bool Options::listComment = false;
+bool Options::listTag = false;
 bool Options::forceOverwrite = false;
 bool Options::preserveTimes = false;
 bool Options::moveFiles = false;
@@ -203,7 +203,7 @@ const struct option Options::longOptions[] = {
   /* get information from the files */
   { "info",           no_argument,       NULL, 'i' },
   { "list",           no_argument,       NULL, 'l' },
-  /* Remove fields and whole comment */
+  /* Remove fields and whole tags */
   { "remove",         required_argument, NULL, 'r' },
   { "delete-all",     no_argument,       NULL, 'D' },
 	/* Filename <-> tag information */
