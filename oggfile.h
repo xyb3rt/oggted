@@ -20,20 +20,23 @@
 #ifndef __OGGFILE_H__
 #define __OGGFILE_H__
 
+#include <taglib/vorbisfile.h>
+#include <taglib/xiphcomment.h>
+
 #include "oggted.h"
+#include "pattern.h"
 #include "types.h"
 
 class OggFile {
 	public:
 		explicit OggFile(const char*);
-		~OggFile();
 
 		bool isValid() const { return file.isValid(); }
 		bool isReadOnly() const { return file.readOnly(); }
 		const char* filename() const { return file.name(); }
 
-		void apply(GenericInfo&);
-		void apply(FieldInfo&);
+		void apply(const GenericInfo&);
+		void apply(const FieldInfo&);
 		void apply(const MatchInfo&);
 		void fill(MatchInfo&);
 		void removeFields(const char*);
@@ -41,9 +44,6 @@ class OggFile {
 
 		void showInfo() const;
 		void listTag() const;
-
-		int filenameToTag(const char*);
-		int organize(const char*, bool = false, bool = false, struct timeval* = NULL);
 
 	private:
 		Ogg::Vorbis::File file;

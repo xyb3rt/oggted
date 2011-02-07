@@ -38,7 +38,7 @@ class Options {
 	public:
 		static bool writeFile;
 		static bool showInfo;
-		static bool listComment;
+		static bool listTag;
 		static bool forceOverwrite;
 		static bool preserveTimes;
 		static bool moveFiles;

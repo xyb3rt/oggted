@@ -24,11 +24,15 @@
 
 #include "oggted.h"
 #include "fileio.h"
+#include "oggfile.h"
 #include "options.h"
 
 const char *command;
 
 int main(int argc, char **argv) {
+	uint fileIdx;
+	bool firstOutput = true;
+
 	command = FileIO::_basename(argv[0]);
 	if (strcmp(command, ".") == 0)
 		command = PROGNAME;
@@ -36,6 +40,23 @@ int main(int argc, char **argv) {
 	if (Options::parseCommandLine(argc, argv)) {
 		cerr << "Try `" << argv[0] << " --help' for more information." << endl;
 		exit(1);
+	}
+
+	for (fileIdx = 0; fileIdx < Options::fileCount; ++fileIdx) {
+		const char *filename = Options::filenames[fileIdx];
+		OggFile file(filename);
+
+		if (Options::listTag) {
+			if (Options::fileCount > 1) {
+				if (!firstOutput)
+					cout << endl;
+				else
+					firstOutput = false;
+				cout << filename << ":" << endl;
+			}
+
+			file.listTag();
+		}
 	}
 
 	return 0;
