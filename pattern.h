@@ -35,7 +35,6 @@ class Pattern {
 	public:
 		Pattern() : status(0) {}
 
-		bool needsID3v2() const;
 		uint count() const;
 		virtual MatchInfo getMatch(uint) const = 0;
 

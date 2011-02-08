@@ -29,19 +29,6 @@ uint Pattern::count() const {
 		return ids.size();
 }
 
-bool Pattern::needsID3v2() const {
-	if (status == 0)
-		return false;
-	
-	vector<char>::const_iterator id = ids.begin();
-	for (; id != ids.end(); ++id) {
-		if (*id == 'd')
-			return true;
-	}
-
-	return false;
-}
-
 bool IPattern::setPattern(const char *text, bool isRE) {
 	uint i;
 	bool wildcardPresent = false;
