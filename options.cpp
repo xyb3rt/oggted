@@ -65,6 +65,7 @@ bool Options::parseCommandLine(int argc, char **argv) {
 				break;
 			}
 			/* modification of fields */
+			case 'F':
 			case 'f':
 				if (!(sep = strchr(optarg, '=')) || !(vlen = strlen(sep + 1)) || strchr(sep + 1, '=')) {
 					cerr << command << ": invalid argument for option -f: " << optarg << endl;
@@ -73,6 +74,7 @@ bool Options::parseCommandLine(int argc, char **argv) {
 				nlen = sep - optarg;
 				finfo.name = string(optarg, nlen);
 				finfo.value = string(sep + 1, vlen);
+				finfo.replace = opt == 'F';
 				fields.push_back(finfo);
 				write = true;
 				break;
@@ -148,7 +150,11 @@ void Options::printUsage() {
 	     << "  -T, --track NUM        set the track number\n"
 	     << "  -y, --year NUM         set the year\n\n";
 	cout << "To add/modify all fields:\n"
-	     << "  -f, --field NAME=VALUE set the content of field NAME to VALUE\n\n";
+	     << "  -f, --add-field NAME=VALUE\n"
+	     << "                         add field with name NAME and content VALUE to the tags\n"
+	     << "  -F, --replace-field NAME=VALUE\n"
+	     << "                         same as -f, but remove all other fields with the same\n"
+	     << "                         name from the tags first\n\n";
 	cout << "Get information from the files:\n"
 	     << "  -i, --info             display general information for the files\n"
 	     << "  -l, --list             list the tag contents of the files\n\n"
@@ -186,7 +192,7 @@ vector<FieldInfo> Options::fields;
 uint Options::fileCount = 0;
 char **Options::filenames = NULL;
 
-const char* Options::options = "hvpa:A:t:c:g:T:y:f:ilr:Dn:N:o:";
+const char* Options::options = "hvpa:A:t:c:g:T:y:F:f:ilr:Dn:N:o:";
 const struct option Options::longOptions[] = {
   /* help, general info & others */
   { "help",           no_argument,       NULL, 'h' },
@@ -201,7 +207,8 @@ const struct option Options::longOptions[] = {
   { "track",          required_argument, NULL, 'T' },
   { "year",           required_argument, NULL, 'y' },
 	/* add/modify fields */
-	{ "field",          required_argument, NULL, 'f' },
+	{ "add-field",      required_argument, NULL, 'f' },
+	{ "replace-field",  required_argument, NULL, 'F' },
   /* get information from the files */
   { "info",           no_argument,       NULL, 'i' },
   { "list",           no_argument,       NULL, 'l' },

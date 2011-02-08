@@ -17,21 +17,30 @@
  */
 
 #include <iostream>
-#include <cstdlib>
-#include <cstdio>
-#include <cstring>
 #include <vector>
+#include <cstdlib>
+#include <cstring>
 
 #include "oggted.h"
 #include "fileio.h"
 #include "oggfile.h"
 #include "options.h"
+#include "pattern.h"
 
 const char *command;
 
+/* return values:
+ *   0: everything went fine
+ *   1: faulty command line arguments required abort
+ *   2: at least one error processing files
+ */
 int main(int argc, char **argv) {
 	uint fileIdx;
+	const char *filename;
 	bool firstOutput = true;
+	bool preserveTimes;
+	FileTimes ptimes;
+	uint retCode = 0;
 
 	command = FileIO::_basename(argv[0]);
 	if (strcmp(command, ".") == 0)
@@ -43,10 +52,59 @@ int main(int argc, char **argv) {
 	}
 
 	for (fileIdx = 0; fileIdx < Options::fileCount; ++fileIdx) {
-		const char *filename = Options::filenames[fileIdx];
-		OggFile file(filename);
+		filename = Options::filenames[fileIdx];
 
-		if (Options::list) {
+		if (!FileIO::isRegular(filename)) {
+			cerr << command << ": " << filename << ": Not a regular file" << endl;
+			retCode |= 2;
+			continue;
+		}
+
+		if (!FileIO::isReadable(filename)) {
+			cerr << command << ": " << filename
+			     << ": Could not open file for reading" << endl;
+			retCode |= 2;
+			continue;
+		}
+
+		if (Options::write && !FileIO::isWritable(filename)) {
+			cerr << command << ": " << filename
+			     << ": Could not open file for writing" << endl;
+			retCode |= 2;
+			continue;
+		}
+
+		preserveTimes = Options::preserveTimes &&
+				FileIO::saveTimes(filename, ptimes) == FileIO::Success;
+
+		OggFile file(filename);
+		if (!file.isValid()) {
+			retCode |= 2;
+			continue;
+		}
+
+		if (Options::fromFilename) {
+			uint matches = Options::inPattern.match(filename);
+			for (uint i = 0; i < matches; ++i)
+				file.apply(Options::inPattern.getMatch(i));
+		}
+
+		vector<char*>::const_iterator eachR = Options::removals.begin();
+		for (; eachR != Options::removals.end(); ++eachR)
+			file.removeFields(*eachR);
+
+		vector<GenericInfo>::const_iterator eachG = Options::generics.begin();
+		for (; eachG != Options::generics.end(); ++eachG)
+			file.apply(*eachG);
+
+		vector<FieldInfo>::const_iterator eachF = Options::fields.begin();
+		for (; eachF != Options::fields.end(); ++eachF)
+			file.apply(*eachF);
+
+		if (Options::write)
+			file.save();
+
+		if (Options::info || Options::list) {
 			if (Options::fileCount > 1) {
 				if (!firstOutput)
 					cout << endl;
@@ -54,11 +112,36 @@ int main(int argc, char **argv) {
 					firstOutput = false;
 				cout << filename << ":" << endl;
 			}
-
-			file.listTag();
+			if (Options::info)
+				file.printInfo();
+			if (Options::list)
+				file.listTag();
 		}
+
+		if (Options::organize) {
+			for (uint i = 0; i < Options::outPattern.count(); ++i) {
+				MatchInfo minfo = Options::outPattern.getMatch(i);
+				file.fill(minfo);
+				Options::outPattern.setMatch(i, minfo);
+			}
+			Options::outPattern.replaceSpecialChars(REPLACE_CHAR);
+			string newPath = Options::outPattern.getText();
+			if (!newPath.empty()) {
+				FileIO::Status ret = FileIO::copy(filename, newPath.c_str());
+				if (ret == FileIO::Error) {
+					cerr << command << ": " << filename << ": Could not organize file"
+					     << endl;
+					retCode |= 2;
+				} else if (ret == FileIO::Success && preserveTimes) {
+					FileIO::resetTimes(newPath.c_str(), ptimes);
+				}
+			}
+		}
+
+		if (preserveTimes && (!Options::organize || !Options::move))
+			FileIO::resetTimes(filename, ptimes);
 	}
 
-	return 0;
+	return retCode;
 }
 

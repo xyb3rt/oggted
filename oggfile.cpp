@@ -60,7 +60,10 @@ void OggFile::apply(const GenericInfo &info) {
 void OggFile::apply(const FieldInfo &info) {
 	if (!file.isValid() || file.readOnly() || tag == NULL)
 		return;
-	
+	if (info.name.isEmpty())
+		return;
+
+	tag->addField(info.name, info.value, info.replace);
 }
 
 void OggFile::apply(const MatchInfo &info) {

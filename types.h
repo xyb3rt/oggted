@@ -30,6 +30,7 @@ typedef struct _GenericInfo {
 typedef struct _FieldInfo {
 	String name;
 	String value;
+	bool replace;
 } FieldInfo;
 
 #endif /* __TYPES_H__ */
