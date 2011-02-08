@@ -42,7 +42,7 @@ class OggFile {
 		void removeFields(const char*);
 		bool save();
 
-		void showInfo() const;
+		void printInfo() const;
 		void listTag() const;
 
 	private:

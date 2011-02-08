@@ -166,7 +166,7 @@ bool OggFile::save() {
 	return file.save();
 }
 
-void OggFile::showInfo() const {
+void OggFile::printInfo() const {
 	Vorbis::Properties *properties;
 	int length;
 

@@ -36,19 +36,19 @@ enum LongOptOnly {
 
 class Options {
 	public:
-		static bool writeFile;
-		static bool showInfo;
-		static bool listTag;
-		static bool forceOverwrite;
+		static bool write;
+		static bool info;
+		static bool list;
+		static bool force;
 		static bool preserveTimes;
-		static bool moveFiles;
-		static bool filenameToTag;
+		static bool move;
+		static bool fromFilename;
 		static IPattern inPattern;
 		static bool organize;
 		static OPattern outPattern;
-		static vector<GenericInfo> genericMods;
-		static vector<char*> fieldsToRemove;
-		static vector<FieldInfo> fieldsToModify;
+		static vector<GenericInfo> generics;
+		static vector<char*> removals;
+		static vector<FieldInfo> fields;
 
 		static uint fileCount;
 		static char **filenames;

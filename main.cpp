@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 		const char *filename = Options::filenames[fileIdx];
 		OggFile file(filename);
 
-		if (Options::listTag) {
+		if (Options::list) {
 			if (Options::fileCount > 1) {
 				if (!firstOutput)
 					cout << endl;

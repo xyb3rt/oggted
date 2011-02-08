@@ -60,7 +60,8 @@ bool Options::parseCommandLine(int argc, char **argv) {
 			case 'y': {
 				ginfo.id = opt;
 				ginfo.value = optarg;
-				genericMods.push_back(ginfo);
+				generics.push_back(ginfo);
+				write = true;
 				break;
 			}
 			/* modification of fields */
@@ -72,34 +73,35 @@ bool Options::parseCommandLine(int argc, char **argv) {
 				nlen = sep - optarg;
 				finfo.name = string(optarg, nlen);
 				finfo.value = string(sep + 1, vlen);
-				fieldsToModify.push_back(finfo);
+				fields.push_back(finfo);
+				write = true;
 				break;
 			/* information from the files */
 			case 'i':
-				showInfo = true;
+				info = true;
 				break;
 			case 'l':
-				listTag = true;
+				list = true;
 				break;
 			/* tag removal & version to write */
 			case 'r':
-				fieldsToRemove.push_back(optarg);
-				writeFile = true;
+				removals.push_back(optarg);
+				write = true;
 				break;
 			/* filename <-> tag information */
 			case 'N':
 			case 'n':
-				filenameToTag = inPattern.setPattern(optarg, opt == 'N');
-				writeFile = true;
+				fromFilename = inPattern.setPattern(optarg, opt == 'N');
+				write = true;
 				break;
 			case 'o':
 				organize = outPattern.setPattern(optarg);
 				break;
 			case OPT_LO_FORCE:
-				forceOverwrite = true;
+				force = true;
 				break;
 			case OPT_LO_ORG_MOVE:
-				moveFiles = true;
+				move = true;
 				break;
 		}
 	}
@@ -168,19 +170,19 @@ void Options::printUsage() {
 	     << "    %d: disc number, %T: track number, %%: percent sign" << endl;
 }
 
-bool Options::writeFile = false;
-bool Options::showInfo = false;
-bool Options::listTag = false;
-bool Options::forceOverwrite = false;
+bool Options::write = false;
+bool Options::info = false;
+bool Options::list = false;
+bool Options::force = false;
 bool Options::preserveTimes = false;
-bool Options::moveFiles = false;
-bool Options::filenameToTag = false;
+bool Options::move = false;
+bool Options::fromFilename = false;
 IPattern Options::inPattern;
 bool Options::organize = false;
 OPattern Options::outPattern;
-vector<GenericInfo> Options::genericMods;
-vector<char*> Options::fieldsToRemove;
-vector<FieldInfo> Options::fieldsToModify;
+vector<GenericInfo> Options::generics;
+vector<char*> Options::removals;
+vector<FieldInfo> Options::fields;
 uint Options::fileCount = 0;
 char **Options::filenames = NULL;
 

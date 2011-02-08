@@ -251,7 +251,7 @@ FileIO::Status FileIO::copy(const char *from, const char *to) {
 			if (access(to, W_OK) != 0) {
 				cerr << command << ": " <<  to << ": Permission denied" << endl;
 				return Error;
-			//} else if (!Options::forceOverwrite) {
+			//} else if (!Options::overwrite) {
 			//	/* have to ask the user if he wants to overwrite the file */
 			//	if (!FileIO::confirmOverwrite(to)) {
 			//		return Abort;
@@ -260,7 +260,7 @@ FileIO::Status FileIO::copy(const char *from, const char *to) {
 		}
 	}
 
-	//if (Options::moveFiles && sameFS) {
+	//if (Options::move && sameFS) {
 	//	/* simply rename the file */
 	//	if (rename(from, to) != 0) {
 	//		cerr << command << ": " << from << ": Could not rename file to: "
@@ -301,7 +301,7 @@ FileIO::Status FileIO::copy(const char *from, const char *to) {
 	//	outFile.close();
 
 	//	if (!error) {
-	//		if (Options::moveFiles)
+	//		if (Options::move)
 	//			FileIO::remove(from);
 	//	} else {
 	//		if (create && FileIO::exists(to))
