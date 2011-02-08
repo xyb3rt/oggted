@@ -24,12 +24,12 @@
 
 typedef struct _GenericInfo {
 	char id;
-	String *value;
+	String value;
 } GenericInfo;
 
 typedef struct _FieldInfo {
-	String *name;
-	String *value;
+	String name;
+	String value;
 } FieldInfo;
 
 #endif /* __TYPES_H__ */

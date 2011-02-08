@@ -59,7 +59,7 @@ bool Options::parseCommandLine(int argc, char **argv) {
 			case 'T':
 			case 'y': {
 				ginfo.id = opt;
-				ginfo.value = new String(optarg);
+				ginfo.value = optarg;
 				genericMods.push_back(ginfo);
 				break;
 			}
@@ -70,8 +70,8 @@ bool Options::parseCommandLine(int argc, char **argv) {
 					exit(1);
 				}
 				nlen = sep - optarg;
-				finfo.name = new String(std::string(optarg, nlen));
-				finfo.value = new String(std::string(sep + 1, vlen));
+				finfo.name = string(optarg, nlen);
+				finfo.value = string(sep + 1, vlen);
 				fieldsToModify.push_back(finfo);
 				break;
 			/* information from the files */

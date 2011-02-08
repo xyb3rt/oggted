@@ -34,25 +34,25 @@ void OggFile::apply(const GenericInfo &info) {
 
 	switch(info.id) {
 		case 'a':
-			tag->setArtist(*info.value);
+			tag->setArtist(info.value);
 			break;
 		case 'A':
-			tag->setAlbum(*info.value);
+			tag->setAlbum(info.value);
 			break;
 		case 't':
-			tag->setTitle(*info.value);
+			tag->setTitle(info.value);
 			break;
 		case 'c':
-			tag->setComment(*info.value);
+			tag->setComment(info.value);
 			break;
 		case 'g':
-			tag->setGenre(*info.value);
+			tag->setGenre(info.value);
 			break;
 		case 'T':
-			tag->setTrack(info.value->toInt());
+			tag->setTrack(info.value.toInt());
 			break;
 		case 'y':
-			tag->setYear(info.value->toInt());
+			tag->setYear(info.value.toInt());
 			break;
 	}
 }
@@ -66,7 +66,6 @@ void OggFile::apply(const FieldInfo &info) {
 void OggFile::apply(const MatchInfo &info) {
 	GenericInfo ginfo;
 	FieldInfo finfo;
-	String name, value;
 
 	if (!file.isValid() || file.readOnly() || tag == NULL)
 		return;
@@ -82,15 +81,12 @@ void OggFile::apply(const MatchInfo &info) {
 		case 'T':
 		case 'y':
 			ginfo.id = info.id;
-			value = info.text;
-			ginfo.value = &value;
+			ginfo.value = info.text;
 			apply(ginfo);
 			break;
 		case 'd':
-			name = "DISCNUMBER";
-			value = info.text;
-			finfo.name = &name;
-			finfo.value = &value;
+			finfo.name = "DISCNUMBER";
+			finfo.value = info.text;
 			apply(finfo);
 			break;
 	}
