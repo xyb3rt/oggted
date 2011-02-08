@@ -1,4 +1,4 @@
-/* id3ted: pattern.h
+/* oggted: pattern.h
  * Copyright (c) 2010 Bert Muennich <muennich at informatik.hu-berlin.de>
  *
  * This program is free software; you can redistribute it and/or

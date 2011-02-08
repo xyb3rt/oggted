@@ -1,4 +1,4 @@
-/* id3ted: types.h
+/* oggted: types.h
  * Copyright (c) 2011 Bert Muennich <muennich at informatik.hu-berlin.de>
  *
  * This program is free software; you can redistribute it and/or
