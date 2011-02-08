@@ -170,20 +170,20 @@ bool OggFile::save() {
 }
 
 void OggFile::printInfo() const {
-	Vorbis::Properties *properties;
-	int length;
+	Vorbis::Properties *prop;
+	int len;
 
 	if (!file.isValid())
 		return;
 
-	if ((properties = file.audioProperties()) == NULL)
+	if ((prop = file.audioProperties()) == NULL)
 		return;
 
-	length = properties->length();
-	cout << "Ogg Vorbis version " << properties->vorbisVersion() << endl;
-	printf("bitrate: %d kBit/s, sample rate: %d Hz, length: %02d:%02d:%02d\n",
-			properties->bitrate(), properties->sampleRate(),
-			length / 3600, length / 60, length % 60);
+	len = prop->length();
+	printf("Ogg Vorbis version %d, length: %02d:%02d:%02d\n",
+	       prop->vorbisVersion(), len / 3600, len / 60, len % 60);
+	printf("Nominal bitrate: %d kBit/s, sample rate: %d Hz, %d channels\n",
+				 prop->bitrate(), prop->sampleRate(), prop->channels());
 }
 
 void OggFile::listTag() const {
