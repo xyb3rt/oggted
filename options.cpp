@@ -67,8 +67,10 @@ bool Options::parseCommandLine(int argc, char **argv) {
 			/* modification of fields */
 			case 'F':
 			case 'f':
-				if (!(sep = strchr(optarg, '=')) || !(vlen = strlen(sep + 1)) || strchr(sep + 1, '=')) {
-					cerr << command << ": invalid argument for option -f: " << optarg << endl;
+				if (!(sep = strchr(optarg, '=')) || !(vlen = strlen(sep + 1)) ||
+						strchr(sep + 1, '=')) {
+					cerr << command << ": invalid argument for option -" << opt << ": "
+					     << optarg << endl;
 					exit(1);
 				}
 				nlen = sep - optarg;
@@ -88,6 +90,10 @@ bool Options::parseCommandLine(int argc, char **argv) {
 			/* tag removal & version to write */
 			case 'r':
 				removals.push_back(optarg);
+				write = true;
+				break;
+			case 'D':
+				strip = true;
 				write = true;
 				break;
 			/* filename <-> tag information */
@@ -177,6 +183,7 @@ void Options::printUsage() {
 }
 
 bool Options::write = false;
+bool Options::strip = false;
 bool Options::info = false;
 bool Options::list = false;
 bool Options::force = false;

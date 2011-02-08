@@ -101,6 +101,9 @@ int main(int argc, char **argv) {
 		for (; eachF != Options::fields.end(); ++eachF)
 			file.apply(*eachF);
 
+		if (Options::strip)
+			file.strip();
+
 		if (Options::write)
 			file.save();
 

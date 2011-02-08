@@ -40,6 +40,7 @@ class OggFile {
 		void apply(const MatchInfo&);
 		void fill(MatchInfo&);
 		void removeFields(const char*);
+		void strip();
 		bool save();
 
 		void printInfo() const;

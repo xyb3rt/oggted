@@ -37,6 +37,7 @@ enum LongOptOnly {
 class Options {
 	public:
 		static bool write;
+		static bool strip;
 		static bool info;
 		static bool list;
 		static bool force;

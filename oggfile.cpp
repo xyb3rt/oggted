@@ -162,6 +162,14 @@ void OggFile::removeFields(const char *id) {
 	tag->removeField(id);
 }
 
+void OggFile::strip() {
+	if (!file.isValid() || file.readOnly() || tag == NULL)
+		return;
+
+	while (!tag->isEmpty())
+		tag->removeField(tag->fieldListMap().begin()->first);
+}
+
 bool OggFile::save() {
 	if (!file.isValid() || file.readOnly() || tag == NULL)
 		return false;
