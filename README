@@ -1,0 +1,9 @@
+oggted - command line ogg vorbis tag editor
+http://github.com/muennich/oggted/
+
+Please have a look at the homepage and the INSTALL file for instructions on
+building and installing oggted.
+
+oggted uses TagLib -- http://developer.kde.org/~wheeler/taglib/ -- written
+by Scott Wheeler.
+
