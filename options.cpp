@@ -132,8 +132,7 @@ bool Options::parseCommandLine(int argc, char **argv) {
 }
 
 void Options::printVersion() {
-	cout << PROGNAME << " - command line ogg vorbis tag editor\n"
-	     << "Version " << VERSION << ", written by Bert Muennich\n"
+	cout << PROGNAME << " " << VERSION " - command line ogg vorbis tag editor\n"
 	     << "Uses TagLib v" << TAGLIB_MAJOR_VERSION << "."
 	     << TAGLIB_MINOR_VERSION << "." << TAGLIB_PATCH_VERSION
 	     << ", written by Scott Wheeler" << endl;
@@ -175,7 +174,7 @@ void Options::printUsage() {
 	     << "                         same as -n, but interpret PATTERN as an extended regex\n"
 	     << "  -o, --organize PATTERN organize files into directory structure specified\n"
 	     << "                         by PATTERN (for supported wildcards see below)\n"
-	     << "      --force            overwrite existing files without asking (-o,-x)\n"
+	     << "      --force            overwrite existing files without asking (-o)\n"
 	     << "      --move             when using -o, move files instead of copying them\n\n";
 	cout << "The following wildcards are supported for the -o,-n,-N option arguments:\n"
 	     << "    %a: Artist, %A: album, %t: title, %g: genre, %y: year,\n"
