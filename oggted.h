@@ -25,7 +25,7 @@
 #include "config.h"
 
 #define PROGNAME "oggted"
-#define VERSION  "0.1"
+#define VERSION  "git-20110415"
 
 using namespace std;
 using namespace TagLib;
