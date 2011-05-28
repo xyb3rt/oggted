@@ -16,7 +16,7 @@ oggted:	$(OBJFILES)
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 install: all
-	install -D -m 0755 oggted $(PREFIX)/bin/oggted
+	install -D -m 0755 oggted $(DESTDIR)$(PREFIX)/bin/oggted
 
 clean:
 	rm -f oggted *.o
