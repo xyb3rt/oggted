@@ -111,22 +111,22 @@ void OggFile::fill(MatchInfo &info) {
 
 	switch (info.id) {
 		case 'a':
-			text = tag->artist().toCString(USE_UNICODE);
+			text = tag->artist().toCString(USE_UTF8);
 			if (text.empty())
 				text = "Unknown Artist";
 			break;
 		case 'A':
-			text = tag->album().toCString(USE_UNICODE);
+			text = tag->album().toCString(USE_UTF8);
 			if (text.empty())
 				text = "Unknown Album";
 			break;
 		case 't':
-			text = tag->title().toCString(USE_UNICODE);
+			text = tag->title().toCString(USE_UTF8);
 			if (text.empty())
 				text = "Unknown Title";
 			break;
 		case 'g':
-			text = tag->genre().toCString(USE_UNICODE);
+			text = tag->genre().toCString(USE_UTF8);
 			break;
 		case 'y':
 			year = tag->year();
@@ -147,7 +147,7 @@ void OggFile::fill(MatchInfo &info) {
 		case 'd':
 			map = tag->fieldListMap();
 			if (map.contains("DISCNUMBER"))
-				text = map["DISCNUMBER"].front().toCString(USE_UNICODE);
+				text = map["DISCNUMBER"].front().toCString(USE_UTF8);
 			if (text.empty())
 				text = "0";
 			break;

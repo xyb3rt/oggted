@@ -21,17 +21,21 @@
 #define __OGGTED_H__
 
 #include <taglib/taglib.h>
+#include <taglib/tstring.h>
 
 #include "config.h"
 
 #define PROGNAME "oggted"
-#define VERSION  "git-20110722"
+#define VERSION  "git-20110725"
 
 using namespace std;
 using namespace TagLib;
 using TagLib::uint;
 
 extern const char *command;
+
+static const String::Type DEF_TSTR_ENC = USE_UTF8 ? String::UTF8
+                                                  : String::Latin1;
 
 #endif /* __OGGTED_H__ */
 

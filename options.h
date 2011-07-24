@@ -23,8 +23,6 @@
 #include <getopt.h>
 #include <vector>
 
-#include <taglib/tstring.h>
-
 #include "oggted.h"
 #include "types.h"
 #include "pattern.h"
