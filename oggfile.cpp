@@ -85,12 +85,12 @@ void OggFile::apply(const MatchInfo &info) {
 		case 'T':
 		case 'y':
 			ginfo.id = info.id;
-			ginfo.value = info.text;
+			ginfo.value = String(info.text, DEF_TSTR_ENC);
 			apply(ginfo);
 			break;
 		case 'd':
 			finfo.name = "DISCNUMBER";
-			finfo.value = info.text;
+			finfo.value = String(info.text, DEF_TSTR_ENC);
 			apply(finfo);
 			break;
 	}
@@ -208,6 +208,6 @@ void OggFile::listTag() const {
 	for (eachKey = map.begin(); eachKey != map.end(); ++eachKey) {
 		values = eachKey->second;
 		for (eachVal = values.begin(); eachVal != values.end(); ++eachVal)
-			cout << eachKey->first << "=" << *eachVal << endl;
+			cout << eachKey->first << "=" << eachVal->toCString(USE_UTF8) << endl;
 	}
 }

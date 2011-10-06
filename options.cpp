@@ -24,6 +24,7 @@
 
 bool Options::parseCommandLine(int argc, char **argv) {
 	int opt, nlen, vlen;
+	String t;
 	GenericInfo ginfo;
 	FieldInfo finfo;
 	char *sep;
@@ -59,7 +60,7 @@ bool Options::parseCommandLine(int argc, char **argv) {
 			case 'T':
 			case 'y': {
 				ginfo.id = opt;
-				ginfo.value = optarg;
+				ginfo.value = String(optarg, DEF_TSTR_ENC);
 				generics.push_back(ginfo);
 				write = true;
 				break;
@@ -74,8 +75,9 @@ bool Options::parseCommandLine(int argc, char **argv) {
 					exit(1);
 				}
 				nlen = sep - optarg;
-				finfo.name = string(optarg, nlen);
-				finfo.value = string(sep + 1, vlen);
+				t = String(optarg, DEF_TSTR_ENC);
+				finfo.name = t.substr(0, nlen);
+				finfo.value = t.substr(nlen + 1, vlen);
 				finfo.replace = opt == 'F';
 				fields.push_back(finfo);
 				write = true;
