@@ -68,8 +68,7 @@ bool Options::parseCommandLine(int argc, char **argv) {
 			/* modification of fields */
 			case 'F':
 			case 'f':
-				if (!(sep = strchr(optarg, '=')) || !(vlen = strlen(sep + 1)) ||
-						strchr(sep + 1, '=')) {
+				if (!(sep = strchr(optarg, '=')) || !(vlen = strlen(sep + 1))) {
 					cerr << command << ": invalid argument for option -" << opt << ": "
 					     << optarg << endl;
 					exit(1);
